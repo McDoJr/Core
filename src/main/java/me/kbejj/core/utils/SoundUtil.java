@@ -6,22 +6,22 @@ import org.bukkit.entity.Player;
 public class SoundUtil {
 
     public static void pling(Player player) {
-        createSound(player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+        createSound(player, Sound.BLOCK_NOTE_BLOCK_PLING);
     }
 
     public static void exp(Player player) {
-        createSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+        createSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
     }
 
     public static void villagerYes(Player player) {
-        createSound(player, Sound.ENTITY_VILLAGER_YES, 1, 1);
+        createSound(player, Sound.ENTITY_VILLAGER_YES);
     }
 
     public static void villagerNo(Player player) {
-        createSound(player, Sound.ENTITY_VILLAGER_NO, 1, 1);
+        createSound(player, Sound.ENTITY_VILLAGER_NO);
     }
 
-    private static void createSound(Player player, Sound sound, float volume, float pitch) {
-        player.getWorld().playSound(player, sound, volume, pitch);
+    private static void createSound(Player player, Sound sound) {
+        player.getWorld().playSound(player, sound, (float) 1, (float) 1);
     }
 }

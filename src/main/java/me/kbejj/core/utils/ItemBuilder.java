@@ -13,8 +13,10 @@ import java.util.stream.Collectors;
 
 public class ItemBuilder {
 
-    private final ItemStack itemStack;
-    private final ItemMeta meta;
+    private ItemStack itemStack;
+    private ItemMeta meta;
+
+    public ItemBuilder() {}
 
     public ItemBuilder(ItemStack itemStack) {
         this.itemStack = itemStack;
@@ -24,6 +26,16 @@ public class ItemBuilder {
     public ItemBuilder(Material material) {
         this.itemStack = new ItemStack(material);
         this.meta = this.itemStack.getItemMeta();
+    }
+
+    public ItemBuilder item(ItemStack itemStack) {
+        this.itemStack = itemStack;
+        return this;
+    }
+
+    public ItemBuilder material(Material material) {
+        this.itemStack = new ItemStack(material);
+        return this;
     }
 
     public ItemBuilder amount(int amount) {
