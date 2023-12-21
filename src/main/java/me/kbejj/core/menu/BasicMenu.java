@@ -10,8 +10,8 @@ public abstract class BasicMenu extends Menu{
     }
 
     protected void useDefaultButtonSlots(){
-        this.backButtonSlot = size() - 8;
-        this.closeButtonSlot = size() - 4;
+        this.backButtonSlot = size() - 9;
+        this.closeButtonSlot = size() - 5;
     }
 
     @Override
