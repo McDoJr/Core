@@ -9,6 +9,11 @@ public abstract class BasicMenu extends Menu{
         super(player);
     }
 
+    protected void useDefaultButtonSlots(){
+        this.backButtonSlot = size() - 8;
+        this.closeButtonSlot = size() - 4;
+    }
+
     @Override
     public void handleOpen(InventoryOpenEvent e) {}
 

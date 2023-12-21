@@ -1,6 +1,7 @@
 package me.kbejj.core.commands;
 
 import me.kbejj.core.managers.CommandManager;
+import me.kbejj.core.messages.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -33,18 +34,22 @@ public abstract class ComplexCommand implements CommandExecutor, TabCompleter {
 
         Subcommand subcommand = this.commandManager.getSubcommand(args[0]);
         if(subcommand == null) {
+            Message.message(sender, "subcommand.invalid");
             return false;
         }
 
         if(!(sender instanceof Player) && subcommand.info().player()) {
+            Message.message(sender, "subcommand.player");
             return false;
         }
 
         if(!sender.hasPermission(subcommand.info().permission())) {
+            Message.message(sender, "permission.failed");
             return false;
         }
 
         if(Arrays.stream(subcommand.info().args()).noneMatch(i -> i == args.length)) {
+            Message.message(sender, "subcommand.args");
             return false;
         }
 

@@ -1,16 +1,28 @@
 package me.kbejj.core.utils;
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringUtil {
 
+    public static final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
+
     public static String translate(String paramString) {
+        if(VersionUtil.getVersion() >= 1.16) {
+            Matcher matcher = pattern.matcher(paramString);
+            while (matcher.find()) {
+                String color = paramString.substring(matcher.start(), matcher.end());
+                paramString = paramString.replace(color, ChatColor.of(color) + "");
+                matcher = pattern.matcher(paramString);
+            }
+        }
         return ChatColor.translateAlternateColorCodes('&', paramString);
     }
 

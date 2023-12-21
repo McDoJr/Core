@@ -20,6 +20,9 @@ public abstract class Menu implements InventoryHolder {
     protected ItemStack close;
     protected ItemStack back;
 
+    protected int closeButtonSlot = 49;
+    protected int backButtonSlot = 45;
+
     public Menu(Player player) {
         this.player = player;
         this.creator = new ItemBuilder();

@@ -17,9 +17,12 @@ public class CommandManager {
     }
 
     public List<String> getAccessibleSubcommandsAsString(CommandSender sender) {
-        return this.getAccessibleSubcommands(sender).stream()
-                .map(subcommand -> subcommand.info().command())
-                .collect(Collectors.toList());
+        List<String> list = new ArrayList<>();
+        for(Subcommand subcommand : getAccessibleSubcommands(sender)) {
+            list.add(subcommand.info().command());
+            list.addAll(Arrays.asList(subcommand.info().aliases()));
+        }
+        return list;
     }
 
     public List<Subcommand> getAccessibleSubcommands(CommandSender sender) {
@@ -30,7 +33,12 @@ public class CommandManager {
 
     public Subcommand getSubcommand(String command) {
         return this.subcommands.stream()
-                .filter(subcommand -> subcommand.info().command().startsWith(command.toLowerCase()))
+                .filter(subcommand -> isSubcommand(command, subcommand))
                 .findFirst().orElse(null);
+    }
+
+    private boolean isSubcommand(String command, Subcommand subcommand) {
+        return subcommand.info().command().equalsIgnoreCase(command)
+                || Arrays.asList(subcommand.info().aliases()).contains(command.toLowerCase());
     }
 }

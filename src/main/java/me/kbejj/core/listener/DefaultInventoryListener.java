@@ -10,8 +10,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Arrays;
-
 public class DefaultInventoryListener implements Listener {
 
     public DefaultInventoryListener(JavaPlugin plugin) {
