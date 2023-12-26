@@ -32,8 +32,16 @@ public class StringUtil {
         });
     }
 
-    public static void logger(String paramString) {
-        Bukkit.getConsoleSender().sendMessage(translate(paramString));
+    public static void logger(String...logs) {
+        Arrays.asList(logs).forEach(log -> {
+            Bukkit.getConsoleSender().sendMessage(translate(log));
+        });
+    }
+
+    public static void onPluginLoadLogger(Runnable runnable) {
+        logger("――――――――――――――――――――――――――――――――――――――――――", "");
+        TimeUtil.run(runnable);
+        logger("", "――――――――――――――――――――――――――――――――――――――――――");
     }
 
     public static String formatItemStack(ItemStack itemStack) {

@@ -1,9 +1,10 @@
 package me.kbejj.core.menu;
 
+import me.kbejj.core.Core;
+import me.kbejj.core.managers.ButtonsManager;
 import me.kbejj.core.utils.ItemBuilder;
 import me.kbejj.core.utils.StringUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -11,12 +12,14 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class Menu implements InventoryHolder {
 
+    protected ButtonsManager buttonsManager;
     protected Player player;
     protected Inventory inventory;
-    protected ItemBuilder creator;
+    protected ItemBuilder itemBuilder;
     protected ItemStack close;
     protected ItemStack back;
 
@@ -24,10 +27,18 @@ public abstract class Menu implements InventoryHolder {
     protected int backButtonSlot = 45;
 
     public Menu(Player player) {
+        this.init(Core.getPlugin(), player);
+    }
+    public Menu(JavaPlugin plugin, Player player) {
+        this.init(plugin, player);
+    }
+
+    private void init(JavaPlugin plugin, Player player){
         this.player = player;
-        this.creator = new ItemBuilder();
-        this.close = creator.material(Material.PAPER).name("&cClose").lore("&7Click to close inventory!").build();
-        this.back = creator.material(Material.PAPER).name("&eBack").lore("&7Click to go back!").build();
+        this.itemBuilder = new ItemBuilder(plugin);
+        this.buttonsManager = new ButtonsManager();
+        this.close = buttonsManager.getButton("close");
+        this.back = buttonsManager.getButton("back");
     }
 
     public abstract String title();

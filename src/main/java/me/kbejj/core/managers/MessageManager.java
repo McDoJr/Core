@@ -1,23 +1,30 @@
 package me.kbejj.core.managers;
 
+import me.kbejj.core.Core;
+import me.kbejj.core.utils.FileUtil;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MessageManager {
 
-    private static final Map<String, Map<String, String>> messages = new HashMap<>();
-    private static final String filename = "messages.yml";
+    private final Map<String, Map<String, String>> messages;
 
-    public static void loadMessages(JavaPlugin plugin) {
-        FileConfiguration config = getConfig(plugin);
+    public MessageManager(JavaPlugin plugin) {
+        this.messages = new HashMap<>();
+        loadMessages(Core.getPlugin());
+        loadMessages(plugin);
+    }
+
+    public MessageManager() {
+        this.messages = new HashMap<>();
+        loadMessages(Core.getPlugin());
+    }
+
+    public void loadMessages(JavaPlugin plugin) {
+        FileConfiguration config = FileUtil.getConfig(plugin, "messages.yml");
         for(String parentKey : config.getKeys(false)) {
             Map<String, String> childMessages = new HashMap<>();
             for(String key : config.getConfigurationSection(parentKey).getKeys(false)) {
@@ -27,26 +34,8 @@ public class MessageManager {
         }
     }
 
-    private static FileConfiguration getConfig(JavaPlugin plugin) {
-        File file = new File(plugin.getDataFolder(), filename);
-        if(!file.exists()) {
-            plugin.saveResource(filename, true);
-        }
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        InputStream stream = plugin.getResource(filename);
-        if(stream != null) {
-            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(stream));
-            config.setDefaults(defaultConfig);
-        }
-        return config;
-    }
-
-    public static String get(String path) {
+    public String get(String path) {
         String[] data = path.split("\\.");
         return messages.get(data[0]).get(data[1]);
-    }
-
-    public static void send(Player player) {
-
     }
 }
