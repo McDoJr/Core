@@ -4,7 +4,6 @@ import me.kbejj.core.managers.ButtonsManager;
 import me.kbejj.core.utils.ItemBuilder;
 import me.kbejj.core.utils.StringUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
